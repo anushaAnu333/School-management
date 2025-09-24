@@ -103,36 +103,7 @@ export default function NewAdmissionPage() {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const file = e.target.files?.[0] || null;
-    setFormData(prev => ({
-      ...prev,
-      [name]: file
-    }));
-  };
 
-  const calculateFees = () => {
-    const admission = parseFloat(formData.admissionFee) || 0;
-    const school = parseFloat(formData.schoolFee) || 0;
-    const hostel = formData.hostelRequired ? (parseFloat(formData.hostelFee) || 0) : 0;
-    const transport = formData.transportRequired ? (parseFloat(formData.transportFee) || 0) : 0;
-    const lunch = formData.lunchSnacks ? (parseFloat(formData.lunchFee) || 0) : 0;
-    const otherFacilities = formData.otherFacilities ? (parseFloat(formData.otherFacilitiesFee) || 0) : 0;
-    const uniform = parseFloat(formData.uniformFee) || 0;
-    const exam = parseFloat(formData.examFee) || 0;
-    const other = parseFloat(formData.otherFee) || 0;
-    
-    const totalBeforeDiscount = admission + school + hostel + transport + lunch + otherFacilities + uniform + exam + other;
-    const discount = parseFloat(formData.discount) || 0;
-    const totalAfterDiscount = totalBeforeDiscount - discount;
-    
-    setFormData(prev => ({
-      ...prev,
-      feesBeforeDiscount: totalBeforeDiscount.toString(),
-      feesAfterDiscount: totalAfterDiscount.toString()
-    }));
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

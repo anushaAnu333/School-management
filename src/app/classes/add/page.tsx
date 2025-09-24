@@ -5,7 +5,7 @@ import { useSchoolData } from '@/context/SchoolDataContext';
 import { useRouter } from 'next/navigation';
 
 export default function AddClassPage() {
-  const { data, dispatch } = useSchoolData();
+  const { dispatch } = useSchoolData();
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',

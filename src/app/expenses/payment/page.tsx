@@ -5,7 +5,7 @@ import { useSchoolData } from '@/context/SchoolDataContext';
 import { useRouter } from 'next/navigation';
 
 export default function MakePaymentPage() {
-  const { data, dispatch } = useSchoolData();
+  const { dispatch } = useSchoolData();
   const router = useRouter();
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],

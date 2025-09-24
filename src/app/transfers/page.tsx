@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function StudentTransferPage() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     studentName: '',
     dateOfTransfer: new Date().toISOString().split('T')[0],

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { studentsData, getStudentById, Student } from '@/data/students';
+import { getStudentById, Student } from '@/data/students';
 
 export default function StudentDetailPage() {
   const router = useRouter();
@@ -275,13 +275,13 @@ export default function StudentDetailPage() {
                       </div>
                       {student.motherName && (
                         <div>
-                          <label className="text-sm font-medium text-gray-500">Mother's Name</label>
+                          <label className="text-sm font-medium text-gray-500">Mother&apos;s Name</label>
                           <p className="text-sm text-gray-900">{student.motherName}</p>
                         </div>
                       )}
                       {student.motherContact && (
                         <div>
-                          <label className="text-sm font-medium text-gray-500">Mother's Contact</label>
+                          <label className="text-sm font-medium text-gray-500">Mother&apos;s Contact</label>
                           <p className="text-sm text-gray-900">{student.motherContact}</p>
                         </div>
                       )}

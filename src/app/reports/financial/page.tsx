@@ -5,16 +5,6 @@ import { useSchoolData } from '@/context/SchoolDataContext';
 
 export default function FinancialReportPage() {
   const { data } = useSchoolData();
-  const [filters, setFilters] = useState({
-    startDate: '',
-    endDate: '',
-    type: ''
-  });
-
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
-  };
 
   // Calculate financial metrics
   const totalRevenue = data.fees.reduce((sum, fee) => sum + fee.amount, 0);

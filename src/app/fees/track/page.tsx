@@ -25,7 +25,6 @@ interface StudentFeeRecord {
 }
 
 export default function FeeTrackingPage() {
-  const router = useRouter();
   const [selectedStudent, setSelectedStudent] = useState<string>('');
   const [selectedClass, setSelectedClass] = useState('All Classes');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));

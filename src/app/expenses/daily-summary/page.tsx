@@ -39,7 +39,7 @@ export default function DailySummaryPage() {
     }
   });
 
-  const [vouchers, setVouchers] = useState([
+  const [vouchers] = useState([
     { voucherNumber: 'RCP-001', studentName: 'Rajesh Kumar', amount: 25000, type: 'Fee Collection' },
     { voucherNumber: 'RCP-002', studentName: 'Priya Sharma', amount: 18000, type: 'Fee Collection' },
     { voucherNumber: 'PV-001', vendorName: 'Power Corp', amount: 15000, type: 'Payment Voucher' },

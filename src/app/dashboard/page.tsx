@@ -3,7 +3,6 @@ import {
   UserProfileCard,
   SummaryCards,
   ActionButtons,
-  DailyLimit,
   SavingPlans,
   CashflowChart,
   StatisticsChart,
