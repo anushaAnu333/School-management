@@ -4,7 +4,7 @@ export const admissionSchema = z.object({
   // Section A: Student Details
   studentName: z.string().min(1, 'Student name is required').max(100),
   dateOfBirth: z.string().min(1, 'Date of birth is required'),
-  gender: z.enum(['Male', 'Female'], { required_error: 'Gender is required' }),
+  gender: z.enum(['Male', 'Female'], { message: 'Gender is required' }),
   placeOfBirth: z.string().min(1, 'Place of birth is required'),
   nationality: z.string().min(1, 'Nationality is required'),
   aadharNumber: z.string().regex(/^[0-9]{12}$/, 'Aadhar number must be 12 digits'),
@@ -75,13 +75,13 @@ export const admissionSchema = z.object({
   
   // Documents and Files
   documents: z.array(z.string()).default([]),
-  birthCertificate: z.any().optional(),
-  previousMarksheet: z.any().optional(),
-  transferCertificate: z.any().optional(),
-  medicalCertificate: z.any().optional(),
-  passportPhoto: z.any().optional(),
-  aadharCopy: z.any().optional(),
-  signedForm: z.any().optional(),
+  birthCertificate: z.instanceof(File).optional(),
+  previousMarksheet: z.instanceof(File).optional(),
+  transferCertificate: z.instanceof(File).optional(),
+  medicalCertificate: z.instanceof(File).optional(),
+  passportPhoto: z.instanceof(File).optional(),
+  aadharCopy: z.instanceof(File).optional(),
+  signedForm: z.instanceof(File).optional(),
   
   // Staff Entry Fields (will be populated from session)
   staffName: z.string().optional(),
