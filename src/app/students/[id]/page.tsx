@@ -225,7 +225,7 @@ export default function StudentDetailPage() {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
+                  onClick={() => setActiveTab(tab.id as 'overview' | 'payments' | 'documents')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === tab.id
                       ? 'border-slate-500 text-slate-600'
@@ -266,11 +266,11 @@ export default function StudentDetailPage() {
                     </div>
                     <div className="space-y-4">
                       <div>
-                        <label className="text-sm font-medium text-gray-500">Father's Name</label>
+                        <label className="text-sm font-medium text-gray-500">Father&apos;s Name</label>
                         <p className="text-sm text-gray-900">{student.fatherName}</p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-500">Father's Contact</label>
+                        <label className="text-sm font-medium text-gray-500">Father&apos;s Contact</label>
                         <p className="text-sm text-gray-900">{student.fatherContact}</p>
                       </div>
                       {student.motherName && (

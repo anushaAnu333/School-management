@@ -22,7 +22,7 @@ export default function StudentTransferPage() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showTransferForm, setShowTransferForm] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const [selectedStudent, setSelectedStudent] = useState<{id: string; name: string; class: string; section: string; admissionNumber: string} | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -42,7 +42,7 @@ export default function StudentTransferPage() {
     }));
   };
 
-  const handleStudentSelect = (student: any) => {
+  const handleStudentSelect = (student: {id: string; name: string; class: string; section: string; admissionNumber: string}) => {
     setSelectedStudent(student);
     setFormData(prev => ({
       ...prev,
