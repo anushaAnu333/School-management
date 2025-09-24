@@ -1,41 +1,55 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
 import LoginForm from "@/components/forms/LoginForm"
 import { type LoginFormData } from "@/lib/validations"
 
 export default function LoginPage() {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const { login, isAuthenticated, isLoading } = useAuth()
+  const [loginError, setLoginError] = useState<string | null>(null)
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard')
+    }
+  }, [isAuthenticated, router])
 
   const handleLogin = async (data: LoginFormData) => {
-    setIsLoading(true)
+    setLoginError(null)
+    console.log('Login attempt with:', data.email)
     
     try {
-      // Here you would make the API call to your backend
-      console.log("Login data:", data)
+      const success = await login(data.email, data.password)
+      console.log('Login result:', success)
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Mock API call structure (replace with actual API call)
-      const apiData = {
-        email: data.email,
-        password: data.password,
+      if (success) {
+        console.log('Login successful, redirecting to dashboard')
+        router.push('/dashboard')
+      } else {
+        console.log('Login failed - invalid credentials')
+        setLoginError('Invalid email or password. Please try again.')
       }
-      
-      console.log("API payload:", apiData)
-      
-      // Simulate successful login and redirect to dashboard
-      router.push('/dashboard')
       
     } catch (error) {
       console.error("Login failed:", error)
-      // Handle error (show toast, etc.)
-    } finally {
-      setIsLoading(false)
+      setLoginError('Login failed. Please try again.')
     }
+  }
+
+  // Show loading if checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
 
@@ -107,6 +121,11 @@ export default function LoginPage() {
         {/* Right Side - Form */}
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="w-full max-w-md">
+            {loginError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm">{loginError}</p>
+              </div>
+            )}
             <LoginForm onSubmit={handleLogin} isLoading={isLoading} />
           </div>
         </div>

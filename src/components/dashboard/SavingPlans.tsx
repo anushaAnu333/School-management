@@ -80,7 +80,7 @@ export default function SavingPlans() {
   const calculatedTotal = plans.reduce((sum, plan) => sum + plan.current, 0);
 
   return (
-    <div className="bg-white rounded-lg p-3 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 min-h-[220px]" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+    <div className="bg-white rounded-lg p-3 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300 min-h-320px]" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
       <div className="flex items-center justify-between mb-3">
         <div>
         <h3 className="text-base font-bold text-gray-800 mb-1" style={{ lineHeight: '1.5' }}>Class-wise Enrollment</h3>
@@ -97,7 +97,7 @@ export default function SavingPlans() {
         <div className="text-xs text-gray-500 mt-1" style={{ lineHeight: '1.5' }}>Across all classes</div>
       </div>
 
-      <div className="max-h-56 overflow-y-auto">
+      <div className="max-h-110 overflow-y-auto">
         <div className="space-y-2">
           {plans.map((plan, index) => (
             <div key={index} className="border border-gray-200 rounded-lg p-2 hover:border-green-200 hover:shadow-md transition-all duration-300 group bg-gray-50" style={{ height: '60px', minHeight: '60px' }}>
