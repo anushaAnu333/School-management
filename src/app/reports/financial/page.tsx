@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useSchoolData } from '@/context/SchoolDataContext';
 
 export default function FinancialReportPage() {
