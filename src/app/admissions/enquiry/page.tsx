@@ -6,17 +6,14 @@ import { useRouter } from 'next/navigation';
 export default function AdmissionEnquiryPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split('T')[0],
+    date: '10/2/25',
     studentName: '',
     gender: '',
     classAppliedFor: '',
+    board: '',
     mobileNumber: '',
     examConducted: false,
-    marksObtained: '',
-    totalMarks: '',
-    qualified: false,
-    admissionStatus: 'Not Confirmed',
-    confirmationMethod: ''
+    admissionStatus: 'Pending'
   });
 
   const [showSMS, setShowSMS] = useState(false);
@@ -33,7 +30,6 @@ export default function AdmissionEnquiryPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Admission Enquiry Data:', formData);
-    // Here you would save the data
     alert('Admission enquiry submitted successfully!');
   };
 
@@ -53,33 +49,34 @@ export default function AdmissionEnquiryPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Admission Enquiry Form</h1>
-          <p className="text-gray-600 mt-2">Manage student admission enquiries and confirmations</p>
-        </div>
+      <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 text-center">Enquiry Form</h1>
+          </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Date */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Form Card */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+              
+              {/* Date Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Date <span className="text-red-500">*</span>
+                <label className="form-label">
+                  Date
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   name="date"
                   value={formData.date}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
+                  className="form-input"
+                  placeholder="10/2/25"
                 />
-                <p className="text-xs text-gray-500 mt-1">System Date (Auto Date)</p>
               </div>
 
+              {/* Student Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="form-label">
                   Student Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -87,23 +84,22 @@ export default function AdmissionEnquiryPage() {
                   name="studentName"
                   value={formData.studentName}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="form-input"
+                  placeholder="Enter student name"
                   required
                 />
               </div>
-            </div>
 
-            {/* Gender and Class */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Gender */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="form-label">
                   Gender <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="form-select"
                   required
                 >
                   <option value="">Select Gender</option>
@@ -112,226 +108,187 @@ export default function AdmissionEnquiryPage() {
                 </select>
               </div>
 
+              {/* Class Applied For */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="form-label">
                   Class Applied For <span className="text-red-500">*</span>
                 </label>
-                <select
+                <input
+                  type="text"
                   name="classAppliedFor"
                   value={formData.classAppliedFor}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="form-input"
+                  placeholder="Enter class"
+                  required
+                />
+              </div>
+
+              {/* Board */}
+              <div>
+                <label className="form-label">
+                  Board <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="board"
+                  value={formData.board}
+                  onChange={handleInputChange}
+                  className="form-select"
                   required
                 >
-                  <option value="">Select Class</option>
-                  <option value="Nursery">Nursery</option>
-                  <option value="LKG">LKG</option>
-                  <option value="UKG">UKG</option>
-                  <option value="Class 1">Class 1</option>
-                  <option value="Class 2">Class 2</option>
-                  <option value="Class 3">Class 3</option>
-                  <option value="Class 4">Class 4</option>
-                  <option value="Class 5">Class 5</option>
-                  <option value="Class 6">Class 6</option>
-                  <option value="Class 7">Class 7</option>
-                  <option value="Class 8">Class 8</option>
-                  <option value="Class 9">Class 9</option>
-                  <option value="Class 10">Class 10</option>
-                  <option value="Class 11">Class 11</option>
-                  <option value="Class 12">Class 12</option>
+                  <option value="">Select Board</option>
+                  <option value="CBSE">CBSE</option>
+                  <option value="ICSE">ICSE</option>
+                  <option value="State Board">State Board</option>
+                  <option value="IB">IB</option>
                 </select>
               </div>
-            </div>
 
-            {/* Mobile Number */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Mobile Number <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="tel"
-                name="mobileNumber"
-                value={formData.mobileNumber}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="+91 9876543210"
-                required
-              />
-            </div>
+              {/* Mobile Number */}
+              <div>
+                <label className="form-label">
+                  Mobile Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  name="mobileNumber"
+                  value={formData.mobileNumber}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="+91 9876543210"
+                  required
+                />
+              </div>
 
-            {/* Exam Conducted */}
-            <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Exam Details</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    name="examConducted"
-                    checked={formData.examConducted}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label className="ml-2 text-sm font-medium text-gray-700">
-                    Exam Conducted
-                  </label>
+              {/* Exam Conducted Checkbox */}
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  name="examConducted"
+                  checked={formData.examConducted}
+                  onChange={handleInputChange}
+                  className="form-checkbox"
+                />
+                <label className="text-sm font-medium text-gray-700">
+                  Exam Conducted
+                </label>
+              </div>
+
+              {/* Admission Status */}
+              <div>
+                <label className="form-label">
+                  Admission Status
+                </label>
+                <select
+                  name="admissionStatus"
+                  value={formData.admissionStatus}
+                  onChange={handleInputChange}
+                  className="form-select"
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              {/* Send Confirmation Section */}
+              <div className="border-t pt-6">
+                <label className="form-label mb-4">Send Confirmation</label>
+                <div className="flex space-x-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowSMS(true)}
+                    className="btn-success flex items-center space-x-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>SMS</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowWhatsApp(true)}
+                    className="btn-success flex items-center space-x-2"
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.656l-.04-.024-4.1-2.35a.5.5 0 01-.2-.4V8.5a.5.5 0 01.2-.4l4.1-2.35.04-.024A9.87 9.87 0 0112.047 4h.004a9.87 9.87 0 015.031 1.656l.04.024 4.1 2.35a.5.5 0 01.2.4v7.5a.5.5 0 01-.2.4l-4.1 2.35-.04.024a9.87 9.87 0 01-5.031 1.656z"/>
+                    </svg>
+                    <span>WhatsApp</span>
+                  </button>
                 </div>
-
-                {formData.examConducted && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ml-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Marks Obtained
-                      </label>
-                      <input
-                        type="number"
-                        name="marksObtained"
-                        value={formData.marksObtained}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="XXX"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Total Marks
-                      </label>
-                      <input
-                        type="number"
-                        name="totalMarks"
-                        value={formData.totalMarks}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="XXX"
-                      />
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        name="qualified"
-                        checked={formData.qualified}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      />
-                      <label className="ml-2 text-sm font-medium text-gray-700">
-                        Qualified
-                      </label>
-                    </div>
-                  </div>
-                )}
               </div>
-            </div>
 
-            {/* Admission Status */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Admission Status
-              </label>
-              <select
-                name="admissionStatus"
-                value={formData.admissionStatus}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="Not Confirmed">Not Confirmed</option>
-                <option value="Confirmed">Confirmed</option>
-              </select>
-              <p className="text-xs text-gray-500 mt-1">
-                Confirmed (if Exam Conducted No/ Qualified - Yes)
-              </p>
-            </div>
-
-            {/* Confirmation Methods */}
-            <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Admission Confirmation</h3>
-              <div className="flex space-x-4">
+              {/* Submit Button */}
+              <div className="flex justify-end space-x-4 pt-6 border-t">
                 <button
                   type="button"
-                  onClick={() => setShowSMS(true)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  onClick={() => router.back()}
+                  className="btn-secondary"
                 >
-                  Send SMS
+                  Cancel
                 </button>
                 <button
-                  type="button"
-                  onClick={() => setShowWhatsApp(true)}
-                  className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+                  type="submit"
+                  className="btn-primary"
                 >
-                  Send WhatsApp
+                  Submit Enquiry
                 </button>
               </div>
-            </div>
+            </form>
+          </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-end space-x-4 pt-6 border-t">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Submit Enquiry
-              </button>
+          {/* SMS Modal */}
+          {showSMS && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">Send SMS</h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Your Ward {formData.studentName}, admission confirmed in our School Greenwood High School. Please contact admission department for further information
+                </p>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => setShowSMS(false)}
+                    className="btn-secondary"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={sendSMS}
+                    className="btn-primary"
+                  >
+                    Send SMS
+                  </button>
+                </div>
+              </div>
             </div>
-          </form>
+          )}
+
+          {/* WhatsApp Modal */}
+          {showWhatsApp && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">Send WhatsApp</h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Your Ward {formData.studentName}, admission confirmed in our School Greenwood High School. Please contact admission department for further information
+                </p>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => setShowWhatsApp(false)}
+                    className="btn-secondary"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={sendWhatsApp}
+                    className="btn-primary"
+                  >
+                    Send WhatsApp
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* SMS Modal */}
-        {showSMS && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-              <h3 className="text-lg font-semibold mb-4">Send SMS</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Your Ward {formData.studentName}, admission confirmed in our School Greenwood High School. Please contact admission department for further information
-              </p>
-              <div className="flex justify-end space-x-3">
-                <button
-                  onClick={() => setShowSMS(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={sendSMS}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  Send SMS
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* WhatsApp Modal */}
-        {showWhatsApp && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-              <h3 className="text-lg font-semibold mb-4">Send WhatsApp</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Your Ward {formData.studentName}, admission confirmed in our School Greenwood High School. Please contact admission department for further information
-              </p>
-              <div className="flex justify-end space-x-3">
-                <button
-                  onClick={() => setShowWhatsApp(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={sendWhatsApp}
-                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-                >
-                  Send WhatsApp
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </div>
   );
 }

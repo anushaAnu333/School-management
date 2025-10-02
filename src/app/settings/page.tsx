@@ -19,6 +19,20 @@ export default function SettingsPage() {
     language: 'English'
   });
 
+  const [feeConfig, setFeeConfig] = useState({
+    academicYear: '2024-25',
+    class5Fee: 3600,
+    class6Fee: 4000,
+    class7Fee: 4200,
+    class8Fee: 4500,
+    class9Fee: 4800,
+    class10Fee: 5000,
+    lateFeeAmount: 100,
+    lateFeePercentage: 2,
+    discountPercentage: 5,
+    discountCriteria: 'Early Payment'
+  });
+
   const handleInputChange = (field: string, value: string) => {
     setSettings(prev => ({
       ...prev,
@@ -26,14 +40,24 @@ export default function SettingsPage() {
     }));
   };
 
+  const handleFeeConfigChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFeeConfig(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleSave = () => {
     console.log('Settings saved:', settings);
+    console.log('Fee Configuration:', feeConfig);
     alert('Settings saved successfully!');
   };
 
   const tabs = [
     { id: 'general', name: 'General', icon: '🏫' },
     { id: 'academic', name: 'Academic', icon: '📚' },
+    { id: 'fee-config', name: 'Fee Configuration', icon: '💰' },
   ];
 
   return (
@@ -192,6 +216,154 @@ export default function SettingsPage() {
                       onChange={(e) => handleInputChange('totalClasses', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'fee-config' && (
+              <div className="space-y-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Fee Configuration</h2>
+                
+                {/* Academic Year */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Academic Year
+                  </label>
+                  <input
+                    type="text"
+                    name="academicYear"
+                    value={feeConfig.academicYear}
+                    onChange={handleFeeConfigChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="e.g., 2024-25"
+                  />
+                </div>
+
+                {/* Class-wise Fee Structure */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Class-wise Monthly Fee Structure</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      { class: 'Class 5', field: 'class5Fee', amount: feeConfig.class5Fee },
+                      { class: 'Class 6', field: 'class6Fee', amount: feeConfig.class6Fee },
+                      { class: 'Class 7', field: 'class7Fee', amount: feeConfig.class7Fee },
+                      { class: 'Class 8', field: 'class8Fee', amount: feeConfig.class8Fee },
+                      { class: 'Class 9', field: 'class9Fee', amount: feeConfig.class9Fee },
+                      { class: 'Class 10', field: 'class10Fee', amount: feeConfig.class10Fee }
+                    ].map(({ class: className, field, amount }) => (
+                      <div key={field}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {className} Monthly Fee (₹)
+                        </label>
+                        <input
+                          type="number"
+                          name={field}
+                          value={amount}
+                          onChange={handleFeeConfigChange}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Enter monthly fee"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Late Fee Configuration */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Late Fee Configuration</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Late Fee Amount (₹)
+                      </label>
+                      <input
+                        type="number"
+                        name="lateFeeAmount"
+                        value={feeConfig.lateFeeAmount}
+                        onChange={handleFeeConfigChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter late fee amount"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Late Fee Percentage (%)
+                      </label>
+                      <input
+                        type="number"
+                        name="lateFeePercentage"
+                        value={feeConfig.lateFeePercentage}
+                        onChange={handleFeeConfigChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter late fee percentage"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Discount Configuration */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Discount Configuration</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Discount Percentage (%)
+                      </label>
+                      <input
+                        type="number"
+                        name="discountPercentage"
+                        value={feeConfig.discountPercentage}
+                        onChange={handleFeeConfigChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter discount percentage"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Discount Criteria
+                      </label>
+                      <select
+                        name="discountCriteria"
+                        value={feeConfig.discountCriteria}
+                        onChange={handleFeeConfigChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="Early Payment">Early Payment</option>
+                        <option value="Sibling Discount">Sibling Discount</option>
+                        <option value="Merit Scholarship">Merit Scholarship</option>
+                        <option value="Financial Aid">Financial Aid</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Fee Structure Summary */}
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Fee Structure Summary</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      { class: 'Class 5', monthly: feeConfig.class5Fee, annual: feeConfig.class5Fee * 10 },
+                      { class: 'Class 6', monthly: feeConfig.class6Fee, annual: feeConfig.class6Fee * 10 },
+                      { class: 'Class 7', monthly: feeConfig.class7Fee, annual: feeConfig.class7Fee * 10 },
+                      { class: 'Class 8', monthly: feeConfig.class8Fee, annual: feeConfig.class8Fee * 10 },
+                      { class: 'Class 9', monthly: feeConfig.class9Fee, annual: feeConfig.class9Fee * 10 },
+                      { class: 'Class 10', monthly: feeConfig.class10Fee, annual: feeConfig.class10Fee * 10 }
+                    ].map(({ class: className, monthly, annual }) => (
+                      <div key={className} className="bg-white rounded-lg p-4 border border-gray-200">
+                        <h4 className="font-semibold text-gray-900 mb-2">{className}</h4>
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">Monthly:</span>
+                            <span className="font-medium">₹{monthly.toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-600">Annual:</span>
+                            <span className="font-medium">₹{annual.toLocaleString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
